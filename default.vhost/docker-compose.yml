@@ -1,0 +1,17 @@
+version: '2'
+ 
+services:
+  default:
+    restart: always
+    build: .
+    ports:
+      - "8000:80"
+    networks:
+      - frontproxy_default
+    environment:
+      - VIRTUAL_HOST=alexsauer.eu
+      - LETSENCRYPT_HOST=alexsauer.eu
+      - LETSENCRYPT_EMAIL=ssl@alexsauer.eu
+networks:
+  frontproxy_default:
+    external: true
