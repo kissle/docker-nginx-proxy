@@ -24,4 +24,4 @@ services:
             - "frontproxy"
 
 volumes:
-    cert-volume:
+    certs-volume:
