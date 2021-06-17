@@ -1,0 +1,27 @@
+version: '2'
+
+services:
+    frontproxy:
+        restart: always
+        image: jwilder/nginx-proxy
+        labels:
+            - "com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy"
+        ports:
+            - "80:80"
+            - "443:443"
+        volumes:
+            - "/var/run/docker.sock:/tmp/docker.sock:ro"
+            - "certs-volume:/etc/nginx/certs:ro"
+            - "/etc/nginx/vhost.d"
+            - "/usr/share/nginx/html"
+    nginx-letsencrypt-companion:
+        restart: always
+        image: jrcs/letsencrypt-nginx-proxy-companion
+        volumes: 
+            - "certs-volume:/etc/nginx/certs"
+            - "/var/run/docker.sock:/var/run/docker.sock:ro"
+        volumes_from: 
+            - "frontproxy"
+
+volumes:
+    cert-volume:
