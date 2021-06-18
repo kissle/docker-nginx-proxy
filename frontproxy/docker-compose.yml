@@ -10,10 +10,10 @@ services:
             - "80:80"
             - "443:443"
         volumes:
-            - "/var/run/docker.sock:/tmp/docker.sock:ro"
-            - "certs-volume:/etc/nginx/certs:ro"
-            - "/etc/nginx/vhost.d"
-            - "/usr/share/nginx/html"
+            - /var/run/docker.sock:/tmp/docker.sock:ro
+            - certs-volume:/etc/nginx/certs:ro
+            - vhost.d:/etc/nginx/vhost.d"
+            - html:/usr/share/nginx/html
     nginx-letsencrypt-companion:
         restart: always
         image: jrcs/letsencrypt-nginx-proxy-companion
@@ -25,3 +25,5 @@ services:
 
 volumes:
     certs-volume:
+    vhost.d:
+    html:
