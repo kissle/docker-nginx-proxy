@@ -2,7 +2,7 @@ version: "3"
 
 services:
   web:
-    build: default.vhost
+    image: nginx
     expose:
      - 8000
     environment:
@@ -10,18 +10,21 @@ services:
       VIRTUAL_HOST: alexsauer.eu
       LETSENCRYPT_HOST: alexsauer.eu
       LETSENCRYPT_EMAIL: "ssl@ealexsauer.eu"
+    volumes:
+      - ./default.vhost/site-content:/usr/share/nginx/html 
     networks:
       service_network:
 
-  web-redirect:
-    image: adamkdean/redirect
-    environment:
-      VIRTUAL_HOST: alexsauer.eu
-      LETSENCRYPT_HOST: alexsauer.eu
-      LETSENCRYPT_EMAIL: "ssl@ealexsauer.eu"
-      REDIRECT_LOCATION: "https://alexsauer.eu"
-    networks:
-      service_network:
+  ###### This Service causes errors with loading css ##### 
+  #web-redirect:
+  #  image: adamkdean/redirect
+  #  environment:
+  #    VIRTUAL_HOST: alexsauer.eu
+  #    LETSENCRYPT_HOST: alexsauer.eu
+  #    LETSENCRYPT_EMAIL: "ssl@ealexsauer.eu"
+  #    REDIRECT_LOCATION: "https://alexsauer.eu"
+  #  networks:
+  #    service_network:
 
   nginx-proxy:
     image: jwilder/nginx-proxy
